@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import './App.css'
 import { Routes, Route } from 'react-router-dom'
+import Navbar from './components/navbar/Navbar'
 
 
 
@@ -18,7 +19,9 @@ function App() {
 
   return (
     <>
-    
+    <Navbar
+    content={
+          
     <Routes>
       <Route path="/" element={<Home/>}/>
       <Route path="/Create" element={<Create/>}/>
@@ -26,6 +29,10 @@ function App() {
       <Route path="/Delete/:id" element={<Delete/>}/>
 
     </Routes>
+
+    }
+    />
+ 
 
 
     
