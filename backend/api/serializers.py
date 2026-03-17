@@ -4,23 +4,23 @@ from .models import *
 class CountrySerializer(serializers.ModelSerializer):
     class Meta:
         model = Country
-        fields = {'id', 'name'}
+        fields = ['id', 'name']
 
 class LeagueSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Country
-        fields = {'id', 'name'}
+        model = League
+        fields = ['id', 'name']
 
 
 
 class characteristicSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Country
-        fields = {'id', 'name'}
+        model = Characteristic
+        fields = ['id', 'name']
 
 
 
 class FootballclubSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Country
+        model = Footballclub
         fields = '__all__'
