@@ -1,5 +1,14 @@
 import { React, useState, useEffect } from "react"
 import AxiosInstance from "./Axios"
+import { Box, Typography } from "@mui/material"
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import TextForm from "./forms/TextForm";
+import SelectForm from "./forms/selectform";
+import MultiSelectForm from "./forms/MultiSelectForm";
+import DescriptionForm from "./forms/DescriptionForm";
+import Button from '@mui/material/Button';
+
+
 
 const Create = () => {
 
@@ -33,7 +42,87 @@ const Create = () => {
     }, [])
     return (
         <div>
-            this is Create page
+         <Box className={"TopBar"}>
+            <AddBoxIcon />
+            <Typography sx={{ marginLeft: '15px' ,fontWeight: 'bold'}}variant="subtitle2">create a new club!</Typography>
+            
+         </Box>
+
+         <Box className={"FormBox"}>
+
+            <Box className ={"FormArea"}>
+                <TextForm label={"Club Name"}/>
+
+                <Box sx ={{marginTop: '30px'}}> 
+                 <TextForm 
+                 label={"City"}
+                 />
+                 </Box>
+
+
+                 <Box sx ={{marginTop: '30px'}}> 
+                    
+                 <SelectForm
+                    label ={"League"}
+                    options={league}
+                    />
+                
+              
+                 </Box>
+                 <Box sx ={{marginTop: '30px'}}> 
+
+                 <Button variant="contained"fullWidth>Submit Data</Button>
+                    </Box>
+
+
+                </Box>
+
+                
+
+
+
+          
+               
+
+
+            <Box className ={"FormArea"}>
+                <SelectForm
+                    label ={"Country"}
+                    options={country}
+                />
+                <Box sx ={{marginTop: '30px'}}> 
+
+                <TextForm label={"Attendance"}/>
+
+                </Box>
+                <Box sx ={{marginTop: '30px'}}>
+
+                <MultiSelectForm
+                 label={"Characteristics"}
+                 options={charateristic}
+                 />
+                </Box>
+
+            </Box>
+
+            
+
+            
+            
+
+            <Box className ={"FormArea"}>
+                <DescriptionForm
+                 label={"Description"}
+                 rows={9}
+                 />
+
+            </Box>
+                
+
+            </Box>
+
+
+         
         </div>
     )
 }
