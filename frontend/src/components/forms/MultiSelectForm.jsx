@@ -9,6 +9,7 @@ import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { useTheme } from '@emotion/react';
 import { Box, Chip } from '@mui/material';
+import FormHelperText from '@mui/material/FormHelperText';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -23,7 +24,7 @@ const MenuProps = {
 
 
 
-export default function MultipleSelectForm({ label, options, value, name, onChange, onBlur }) {
+export default function MultipleSelectForm({ label, options, value, name, onChange, onBlur, error, helperText }) {
   const theme = useTheme();
 
 
@@ -43,6 +44,8 @@ export default function MultipleSelectForm({ label, options, value, name, onChan
           name={name}
           onChange={onChange}
           onBlur={onBlur}
+          error={error}
+          helperText={helperText}
 
           input={<OutlinedInput label={label} />}
           renderValue={(selected) => (
@@ -72,6 +75,7 @@ export default function MultipleSelectForm({ label, options, value, name, onChan
           })}
 
         </Select>
+        <FormHelperText error >{helperText}</FormHelperText>
       </FormControl>
     </div>
   );
