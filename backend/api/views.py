@@ -38,4 +38,18 @@ class CharacteristicViewSet(viewsets.ViewSet):
         queryset = Characteristic.objects.all()
         serializer = self.serializer_class(queryset, many=True)
         return Response(serializer.data)    
+
+class FootballClubViewset(viewsets.ViewSet):
+    permission_classes = [permissions.AllowAny]
+    queryset = Footballclub.objects.all()
+    serializer_class = FootballclubSerializer
+
+    def create (self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+
+          return Response(serializer.errors, status=400)
        

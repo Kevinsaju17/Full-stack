@@ -1,7 +1,7 @@
 import TextField from '@mui/material/TextField';
 import * as React from 'react';
 
-export default function TextFields({ label }) {
+export default function TextFields({ label, value, name, onChange, onBlur }) {
   return (
    
     
@@ -9,7 +9,13 @@ export default function TextFields({ label }) {
       id="standard-basic" 
       sx ={{ width: '100%' }}
       label={label}
-      variant="outlined" />
+      variant="outlined" 
+      value = {value}
+      name={name}
+      onChange={onChange}
+      onBlur={onBlur}
+      
+      />
    
   );
 }

@@ -32,7 +32,7 @@ class Footballclub(models.Model):
     city = models.CharField(max_length=100)
     country= models.ForeignKey(Country, on_delete = models.CASCADE)
     league=models.ForeignKey(League,on_delete=models.CASCADE)
-    Characteristic=models.ManyToManyField(Characteristic)
+    characteristic=models.ManyToManyField(Characteristic)
     
 
 

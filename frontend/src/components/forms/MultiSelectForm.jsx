@@ -23,19 +23,11 @@ const MenuProps = {
 
 
 
-export default function MultipleSelectForm({ label,options}) {
-    const theme = useTheme();
-  const [personName, setPersonName] = React.useState([]);
+export default function MultipleSelectForm({ label, options, value, name, onChange, onBlur }) {
+  const theme = useTheme();
 
-  const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
-    );
-  };
+
+
 
   return (
     <div>
@@ -45,35 +37,40 @@ export default function MultipleSelectForm({ label,options}) {
           labelId="demo-multiple-checkbox-label"
           id="demo-multiple-checkbox"
           multiple
-          value={personName}
-          onChange={handleChange}
+
+
+          value={value}
+          name={name}
+          onChange={onChange}
+          onBlur={onBlur}
+
           input={<OutlinedInput label={label} />}
           renderValue={(selected) => (
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                {selected.map((value) => (
+              {selected.map((value) => (
                 <Chip
-                key={value}
-                label={options.find((option) => option.id === value)?.name }/>
-                ))}
-                </Box>
+                  key={value}
+                  label={options.find((option) => option.id === value)?.name} />
+              ))}
+            </Box>
 
-            )}
+          )}
           MenuProps={MenuProps}
-         >
-          {options.map((option) => {
-            const selected = personName.includes(option.id);
-            const SelectionIcon = selected ? CheckBoxIcon : CheckBoxOutlineBlankIcon;
+        >
+
+
+          {(options || []).map((option) => {
+            const selected = (value || []).includes(option.id);
+            const Icon = selected ? CheckBoxIcon : CheckBoxOutlineBlankIcon;
 
             return (
               <MenuItem key={option.id} value={option.id}>
-                <SelectionIcon
-                  fontSize="small"
-                  style={{ marginRight: 8, padding: 9, boxSizing: 'content-box' }}
-                />
+                <Icon fontSize="small" style={{ marginRight: 8 }} />
                 <ListItemText primary={option.name} />
               </MenuItem>
             );
           })}
+
         </Select>
       </FormControl>
     </div>

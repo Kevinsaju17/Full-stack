@@ -1,6 +1,6 @@
 import TextField from '@mui/material/TextField';
 
-export default function DescriptionForm({label, rows}) {
+export default function DescriptionForm({label, rows, value, name, onChange, onBlur}) {
   return (
     
     
@@ -10,6 +10,10 @@ export default function DescriptionForm({label, rows}) {
           label={label}
           multiline
           rows={rows}
+          value = {value}
+          name={name}
+          onChange={onChange}
+          onBlur={onBlur}
         />
      
   );

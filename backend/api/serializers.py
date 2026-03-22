@@ -20,7 +20,18 @@ class characteristicSerializer(serializers.ModelSerializer):
 
 
 
+# class FootballclubSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Footballclub
+#         fields = '__all__'
+
+
 class FootballclubSerializer(serializers.ModelSerializer):
+    characteristic = serializers.PrimaryKeyRelatedField(
+        many=True,
+        queryset=Characteristic.objects.all()
+    )
+
     class Meta:
         model = Footballclub
         fields = '__all__'
