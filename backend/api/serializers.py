@@ -27,11 +27,19 @@ class characteristicSerializer(serializers.ModelSerializer):
 
 
 class FootballclubSerializer(serializers.ModelSerializer):
-    characteristic = serializers.PrimaryKeyRelatedField(
-        many=True,
-        queryset=Characteristic.objects.all()
-    )
+
+    league_details = LeagueSerializer(source='league', read_only=True)
+    country_details = CountrySerializer(source='country', read_only=True)
+    characteristic_names = serializers.SerializerMethodField()
+
+    # characteristic = serializers.PrimaryKeyRelatedField(
+    #     many=True,
+    #     queryset=Characteristic.objects.all()
+    # )
 
     class Meta:
         model = Footballclub
         fields = '__all__'
+
+    def get_characteristic_names(self, obj):
+        return [characteristic.name for characteristic in obj.characteristic.all()]     
