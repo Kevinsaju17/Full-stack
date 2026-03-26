@@ -1,9 +1,268 @@
-import React from "react";
+import { React, useState, useEffect } from "react"
+import AxiosInstance from "./Axios"
+import { Box, Typography } from "@mui/material"
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import TextForm from "./forms/TextForm";
+import SelectForm from "./forms/selectform";
+import MultiSelectForm from "./forms/MultiSelectForm";
+import DescriptionForm from "./forms/DescriptionForm";
+import Button from '@mui/material/Button';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import MyMessage from "./forms/Message";
+import { useNavigate,useParams } from 'react-router-dom'
 
-const Edit =() =>{
-    return(
+
+const Edit = () => {
+    const MyParameter = useParams()
+    const MyId =MyParameter.id
+
+    console.log("MyId",MyId)
+
+    const [country, setCountry] = useState([])
+    const [league, setLeague] = useState([])
+    const [characteristic, setCharacteristic] = useState([])
+    const [message, setMessage] = useState([])
+    const navigate = useNavigate()
+    const [myData,setMyData] = useState({
+          name: '',
+            description: '',
+            country: '',
+            league: '',
+            attendance: 0,
+            city: '',
+            characteristic: [],
+
+    })
+        console.log("my Data",myData)
+
+
+
+
+
+   
+   
+
+
+    const GetData = () => {
+        AxiosInstance.get(`country/`).then((res) => {
+            setCountry(res.data)
+
+        })
+
+        AxiosInstance.get(`league/`).then((res) => {
+            setLeague(res.data)
+
+        })
+
+        AxiosInstance.get(`characteristic/`).then((res) => {
+            setCharacteristic(res.data)
+
+        })
+
+           AxiosInstance.get(`footballclub/${MyId}/`).then((res) => {
+                setMyData(res.data)
+    
+            })
+    }
+    useEffect(() => {
+        GetData()
+    }, [])
+
+    const validationSchema = Yup.object({
+        name:Yup 
+        .string("the name must be text")
+        .required("the name is required"),
+        attendance:Yup
+        .number("Attendance must be a number")
+        .required("Attendance is required"),
+        characteristic:Yup
+        .array()
+        .min(1,"Select at least one option"),
+        description:Yup 
+        .string("the description must be text")
+        .required("the description is required")
+    })
+
+
+
+
+    const formik = useFormik({
+        initialValues: {
+            name: myData.name,
+            description:myData.description,
+            country:myData.country ,
+            league: myData.league,
+            attendance: myData.attendance,
+            city: myData.city,
+            characteristic: myData.characteristic,
+        },
+        enableReinitialize:true,
+        validationSchema: validationSchema,
+
+        onSubmit: (values) => {
+    AxiosInstance.put(`footballclub/${MyId}/`, values)
+        .then(() => {
+            console.log("successful data submission")
+        })
+        .catch((error) => {
+            console.log("ERROR DATA:", error.response.data)  // ← now you'll see the actual error
+        })
+        setMessage(  <MyMessage
+                    messageText={"you succesfully Updated data to the database"}
+                    messagecolor="black"
+                />)
+                setTimeout(()=>
+                    navigate('/'),2000
+                )
+}
+    })
+
+
+
+
+
+
+    console.log("Formik Values", formik.values)
+
+
+    return (
         <div>
-            this is Edit page
+            <form onSubmit={formik.handleSubmit}>
+                <Box className={"TopBar"}>
+                    <AddBoxIcon />
+                    <Typography sx={{ marginLeft: '15px', fontWeight: 'bold' }} variant="subtitle2">Edit Football club!</Typography>
+
+                </Box>
+
+
+
+
+                {message}                                      {/* where the message will come */}
+
+                
+
+                <Box className={"FormBox"}>
+
+                    <Box className={"FormArea"}>
+                        <TextForm label={"Club Name"}
+                            name='name'
+                            value={formik.values.name}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error = {formik.touched.name && Boolean(formik.errors.name)}
+                            helperText={formik.touched.name && formik.errors.name}
+                        />
+
+                        <Box sx={{ marginTop: '30px' }}>
+                            <TextForm
+                                label={"City"}
+                                name='city'
+                                value={formik.values.city}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                error = {formik.touched.city && Boolean(formik.errors.city)}
+                                helperText={formik.touched.city && formik.errors.city}
+                            />
+                        </Box>
+
+
+                        <Box sx={{ marginTop: '30px' }}>
+
+                            <SelectForm
+                                label={"League"}
+                                options={league}
+                                name='league'
+                                value={formik.values.league}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                 error = {formik.touched.league && Boolean(formik.errors.league)}
+                                helperText={formik.touched.league && formik.errors.league}
+                            />
+
+                        
+
+
+                        </Box>
+                        <Box sx={{ marginTop: '30px' }}>
+
+                            <Button type="submit" variant="contained" fullWidth>Submit Data</Button>
+                        </Box>
+
+
+                    </Box>
+
+
+
+
+
+
+
+
+
+                    <Box className={"FormArea"}>
+                        <SelectForm
+                            label={"Country"}
+                            options={country}
+                            name='country'
+                            value={formik.values.country}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                                error = {formik.touched.country && Boolean(formik.errors.country)}
+                                helperText={formik.touched.country && formik.errors.country}
+                            />
+                      
+                        <Box sx={{ marginTop: '30px' }}>
+
+                            <TextForm label={"Attendance"}
+                                name='attendance'
+                                value={formik.values.attendance}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                error = {formik.touched.attendance && Boolean(formik.errors.attendance)}
+                                helperText={formik.touched.attendance && formik.errors.attendance}
+                            />
+
+                        </Box>
+                        <Box sx={{ marginTop: '30px' }}>
+
+                            <MultiSelectForm
+                                label={"Characteristic"}
+                                options={characteristic}
+                                name='characteristic'
+                                value={formik.values.characteristic}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                               error = {formik.touched.characteristic && Boolean(formik.errors.characteristic)}
+                               helperText={formik.touched.characteristic && formik.errors.characteristic}
+                            />
+                        </Box>
+
+                    </Box>
+
+
+
+
+
+
+                    <Box className={"FormArea"}>
+                        <DescriptionForm
+                            label={"Description"}
+                            rows={9}
+                            
+                            name='description'
+                            value={formik.values.description}
+                            onChange={formik.handleChange}
+                             onBlur={formik.handleBlur}
+                        />
+
+                    </Box>
+
+
+                </Box>
+
+
+            </form>
         </div>
     )
 }
