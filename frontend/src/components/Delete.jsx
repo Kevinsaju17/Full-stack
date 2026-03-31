@@ -44,10 +44,9 @@ const Delete =() =>{
       const GetData = () => {
        
 
-           AxiosInstance.get(`footballclub/${MyId}/`).then((res) => {
-                setMyData(res.data)
-    
-            })
+        AxiosInstance.get('footballclub/?country=india').then((res) => {
+      setMyData(res.data)
+})
     }
     useEffect(() => {
         GetData()

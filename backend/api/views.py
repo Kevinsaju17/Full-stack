@@ -65,6 +65,8 @@ class FootballClubViewset(viewsets.ViewSet):
          serializer = self.serializer_class(queryset)
          return Response(serializer.data)
 
+
+
  
     def update (self,request,pk=None):
         queryset = self.queryset.get(pk=pk)
@@ -80,4 +82,20 @@ class FootballClubViewset(viewsets.ViewSet):
         queryset = self.queryset.get(pk=pk)
         queryset.delete()
         return Response(status=204)
+    
 
+    # def retrieve(self,request,country):  
+    #      queryset = self.queryset.get(Country_details.name=='india')
+    #      serializer = self.serializer_class(queryset)
+    #      return Response(serializer.data)
+
+    def list(self, request):
+     country = request.query_params.get('country', None)  # reads ?country=india from URL
+    
+     queryset = Footballclub.objects.all()
+    
+     if country:
+        queryset = queryset.filter(country__name__iexact=country)  # iexact = case-insensitive match
+    
+     serializer = self.serializer_class(queryset, many=True)
+     return Response(serializer.data)   

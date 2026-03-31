@@ -50,25 +50,25 @@ export default function Menu() {
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
 
-          <ListItemButton sx={{ pl: 4 }}>
+          <ListItemButton sx={{ pl: 4 }} onClick={handleClick} component={Link} to="/Netherland" selected={path == "/Netherland"}>
             <DashboardCustomizeIcon>
               <StarBorder />
             </DashboardCustomizeIcon>
-            <ListItemText primary="netherland" />
+            <ListItemText primary="Netherland" />
           </ListItemButton>
 
-          <ListItemButton sx={{ pl: 4 }}>
+          <ListItemButton sx={{ pl: 4 }} onClick={handleClick} component={Link} to="/India" selected={path == "/India"}>
             <DashboardCustomizeIcon>
               <StarBorder />
             </DashboardCustomizeIcon>
-            <ListItemText primary="india" />
+            <ListItemText primary="India" />
           </ListItemButton>
 
-          <ListItemButton sx={{ pl: 4 }}>
+          <ListItemButton sx={{ pl: 4 }}onClick={handleClick} component={Link} to="/NewZealand" selected={path == "/NewZealand"}>
             <DashboardCustomizeIcon>
               <StarBorder />
             </DashboardCustomizeIcon>
-            <ListItemText primary="new zealand" />  
+            <ListItemText primary="Newzealand " />  
           </ListItemButton>
 
         </List>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Box, Typography,Chip,IconButton } from "@mui/material"
-import {Link} from "react-router"
+import {Link,useLocation} from "react-router"
 import CalendarViewMonthIcon from '@mui/icons-material/CalendarViewMonth';
 import {MaterialReactTable} from "material-react-table";
 import AxiosInstance from "./Axios";
@@ -20,6 +20,8 @@ const Home =() =>{
     useEffect(() => {
         GetData()
     }, [])
+
+   
 
     const columns = useMemo(
         () => [

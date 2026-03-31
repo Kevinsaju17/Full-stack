@@ -11,6 +11,9 @@ import Home from './components/Home'
 import Create from './components/Create'
 import Edit from './components/Edit'
 import Delete from './components/Delete'
+import India from './components/India'
+import Netherland from './components/Netherland'
+import NewZealand from './components/NewZealand'
 
 
 
@@ -27,6 +30,11 @@ function App() {
       <Route path="/Create" element={<Create/>}/>
       <Route path="/Edit/:id" element={<Edit/>}/>
       <Route path="/Delete/:id" element={<Delete/>}/>
+      <Route path="/India" element={<India/>}/>
+      <Route path="/Netherland" element={<Netherland/>}/>
+      <Route path="/NewZealand" element={<NewZealand/>}/>
+
+
 
     </Routes>
 
@@ -41,3 +49,8 @@ function App() {
 }
 
 export default App
+
+
+
+
+
